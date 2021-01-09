@@ -1,0 +1,142 @@
+* {
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: rgb(245, 236, 233);
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.ship-container {
+  flex-direction: column;
+  align-items: center;
+  font-size: 1.5rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-rows: repeat(10, 4.6vmin); /* (46 + 2 + 2) * 2 = 100 */
+  grid-template-columns: repeat(10, 4.6vmin);
+  margin: 2vmin; /* vmin = not more than vh & vw */
+  background-color: #c4ccd3;
+}
+
+.grid div {
+  border: 1px solid rgba(226, 226, 226, 0.3);
+}
+
+
+/* Inside ship (choose) grid */
+.grid-ships {
+  display: flex; /* line up the ships */
+  flex-wrap: wrap;
+  justify-content: center;
+  height: 23vmin;
+  width: 50vmin;
+}
+
+.grid-computer {
+  display: none;
+}
+
+.ship {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 1vmin;
+  width: calc(4.6vmin * var(--width, 1));   /* default is 1 */
+  height: calc(4.6vmin * var(--height, 1)); /* 4.6 * 10 squares = 46 * 2 tables = 92 + 8 margin = 100 */
+}
+.ship-vertical {
+  width: calc(4.6vmin * var(--height, 1)); /* swap height & width */
+  height: calc(4.6vmin * var(--width, 1)); /* swap height & width */
+  flex-wrap: wrap;
+}
+
+.ship, .taken {
+  background-color: rgb(178, 73, 32);
+}
+
+.ship > div { /* for every div of ship */
+  width: 4.6vmin;
+  height: 4.6vmin;
+}
+
+.destroyer-container {
+  --width: 2;
+}
+.submarine-container {
+  --width: 3;
+}
+.cruiser-container {
+  --width: 3;
+}
+.battleship-container {
+  --width: 4;
+}
+.carrier-container {
+  --width: 5;
+}
+/* Inside player grid */
+
+.grid-computer > .taken {
+  background-color: #c4ccd3;
+}
+
+.miss {
+  background-color: white;
+}
+
+.hit {
+  background-color: red !important;
+}
+
+/* buttons and forms */
+
+.btn {
+  font-size: inherit;
+  background-color: hsl(155, 100%, 50%);
+  padding: .5em 1em;
+  margin: .5em;
+  outline: none;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: .2em;
+  color: #333;
+}
+
+.info-text {
+  margin: 1rem;
+}
+
+.hidden-info {
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.name {
+  width: 50vh;
+}
+
+.on-play {
+  display: none;
+}
+
+#info {
+  text-align: center;
+}
+.name-container {
+  display: none;
+}
+.name-container > div {
+  width: 50vh;
+  text-align: center;
+}
+
+
