@@ -17,7 +17,6 @@ const nameInput = document.querySelector('#name');
 const beforePlayFields = document.querySelectorAll('.before-play');
 const onPlayFields = document.querySelectorAll('.on-play');
 const nameDisplay = document.querySelector('#name-display')
-// const progressRows = document.querySelectorAll('tr');
 const width = 10;
 const userSquares = [];
 const computerSquares = [];
@@ -36,13 +35,13 @@ const notAllowedVertical = [99, 98, 97, 96, 95, 94, 93, 92, 91, 90, 89, 88, 87, 
 function createBoard(grid, squares, width) {
   for (let i = 0; i < width * width; i++) {
     const square = document.createElement('div');
-    square.dataset.id = i; // set the id of div
-    grid.appendChild(square); // add div to the HTML
-    squares.push(square); // add div to the array
+    square.dataset.id = i;
+    grid.appendChild(square);
+    squares.push(square);
   }
 }
 
-createBoard(userGrid, userSquares, width); // create user squares
+createBoard(userGrid, userSquares, width);
 
 
 // Ships
@@ -128,14 +127,11 @@ let draggedShipLength; // e.g. 2
 
 ships.forEach(ship => ship.addEventListener('mousedown', e => {
   selectedShipNameWithId = e.target.id; // e.g. destroyer-0
-  //console.log(selectedShipNameWithIndex);
 }))
 
 function dragStart() {
   draggedShip = this;
-  //console.log(draggedShip)
   draggedShipLength = this.childNodes.length;
-  //console.log(draggedShipLength)
 }
 
 function dragOver(e) {
@@ -245,25 +241,6 @@ let cruiserCount = 0;
 let battleshipCount = 0;
 let carrierCount = 0;
 
-/*
-class Player {
-  constructor() {
-    destroyerCount = 0;
-    submarineCount = 0;
-    cruiserCount = 0;
-    battleshipCount = 0;
-    carrierCount = 0;
-  }
-  getDestroyerCount() {
-    return destroyerCount;
-  }
-}
-let computer = new Player();
-let user = new Player();
-console.log(computer.getDestroyerCount());
-*/
-
-
 function openSquare(classList) {
   const enemySquare = computerGrid.querySelector(`div[data-id='${shotFired}']`); // square.dataset.id
   const obj = Object.values(classList); // Object.values() returns array of given object's property values
@@ -315,7 +292,6 @@ function enemyTurn(square) {
 
 function checkForWins() {
   let enemy = 'computer';
-  //console.log(progressRows.filter(':text[value=""]'))
   if (destroyerCount === 2) {
     infoDisplay.innerHTML = `The computer's destroyer is sunk`;
   }
@@ -362,13 +338,4 @@ function checkForWins() {
 function gameOver() {
   isGameOver = true;
   startButton.removeEventListener('click', makeMove);
-  // computerSquares.forEach(square => square.removeEventListener('click'
 }
-
-
-
-
-// const isOverflowing = () => {
-//   if (direction = 1) return (ship.directions[0].length + (randomStart % width)) >= width;
-//   if (direction = 10) return randomStart % width >= width;
-// }
