@@ -94,8 +94,8 @@ function generate(ship) {
   const isTaken = current.some(index => computerSquares[randomStart + index].classList.contains('taken'));
   const isAtRightEdge = current.some(index => (randomStart + index) % width === width - 1);
   const isAtLeftEdge = current.some(index => (randomStart + index) % width === 0);
-  // some() tests whether at least one element in the array passes the test
-  // Generation:
+
+  // Generation
   if (!isTaken && !isAtLeftEdge && !isAtRightEdge)
     current.forEach(index => computerSquares[randomStart + index].classList.add('taken', ship.name));
   else
@@ -122,7 +122,7 @@ userSquares.forEach(square => square.addEventListener('dragenter', dragEnter));
 userSquares.forEach(square => square.addEventListener('drop', dragDrop));
 
 let selectedShipNameWithId; // e.g. destroyer-0
-let draggedShip; //e.g. .destroyer-container
+let draggedShip; // e.g. .destroyer-container
 let draggedShipLength; // e.g. 2
 
 ships.forEach(ship => ship.addEventListener('mousedown', e => {
@@ -134,12 +134,12 @@ function dragStart() {
   draggedShipLength = this.childNodes.length;
 }
 
-function dragOver(e) {
-  e.preventDefault();
+function dragOver(event) {
+  event.preventDefault();
 }
 
-function dragEnter(e) {
-  e.preventDefault();
+function dragEnter(event) {
+  event.preventDefault();
 }
 
 function dragDrop() {
@@ -147,27 +147,27 @@ function dragDrop() {
   let shipClass = shipNameWithLastSquareId.slice(0, -2); // e.g. destroyer
   let lastSquareId = parseInt(shipNameWithLastSquareId.substr(-1)); // e.g. 1 (destroyer has 0 and 1)
   let selectedShipId = parseInt(selectedShipNameWithId.substr(-1)); // e.g. 0
-  // selectedShipNameWithIndex e.g. destroyer-0
+
   let lastSquareIndex = lastSquareId + parseInt(this.dataset.id) - selectedShipId; // e.g. 83 + 1 - 0
+
   // Last square cannot go there:
   const notAllowedHorizontal = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 11, 21, 31, 41, 51, 61, 71, 81, 91, 101, 22, 32, 42, 52, 62, 72, 82, 92, 102, 13, 23, 33, 43, 53, 63, 73, 83, 93, 103]
   const notAllowedVertical = [99, 98, 97, 96, 95, 94, 93, 92, 91, 90, 89, 88, 87, 86, 85, 84, 83, 82, 81, 80, 79, 78, 77, 76, 75, 74, 73, 72, 71, 70, 69, 68, 67, 66, 65, 64, 63, 62, 61, 60]
   let newNotAllowedHorizontal = notAllowedHorizontal.splice(0, 10 * lastSquareId);
   let newNotAllowedVertical = notAllowedVertical.splice(0, 10 * lastSquareId);
 
-  if (isHorizontal && !newNotAllowedHorizontal.includes(lastSquareIndex)) { // if ship is horizontal and in valid position
+  if (isHorizontal && !newNotAllowedHorizontal.includes(lastSquareIndex)) {
     for (let i = 0; i < draggedShipLength; i++) {
-      //debugger;
       userSquares[parseInt(this.dataset.id) - selectedShipId + i].classList.add('taken', shipClass)
     }
-  } else if (!isHorizontal && !newNotAllowedVertical.includes(lastSquareIndex)) { // if ship is vertical and in valid position
+  } else if (!isHorizontal && !newNotAllowedVertical.includes(lastSquareIndex)) {
     for (let i = 0; i < draggedShipLength; i++) {
-      //debugger;
       userSquares[parseInt(this.dataset.id) - selectedShipId + width * i].classList.add('taken', shipClass)
     }
   } else return;
-  //As long as the index of the ship we are dragging is not in the newNotAllowedVertical array. If we drag the ship by its
-  //index-1 , index-2 and so on, the ship will rebound back to the shipGrid.
+  
+  // As long as the index of the ship we are dragging is not in the newNotAllowedVertical array. If we drag the ship by its
+  // index-1 , index-2 and so on, the ship will rebound back to the shipGrid.
 
   shipGrid.removeChild(draggedShip);
   if (!shipGrid.querySelector('.ship')) {
@@ -198,33 +198,31 @@ function makeMove() {
 }
 startButton.addEventListener('click', () => {
   startGame();
-
 });
 
 function startGame() {
-
   // Check if we can start the game
-  if (shipGrid.children.length > 0) { // hasChildNodes() can read white space, so using length
-    alert('Please drag your ships to the board before starting the game.')
+  if (shipGrid.children.length > 0) {
+    alert('Please drag your ships to the board before starting the game.');
     return;
   } else if (nameInput.value === '') {
-    alert('Please enter your name.')
+    alert('Please enter your name.');
     return;
   }
 
   // Adjust display below the board
   for (field of beforePlayFields)
-    field.style.display = 'none'; // hide intro HTML
+    field.style.display = 'none';
   for (field of onPlayFields) {
-    field.style.display = 'block'; // show match info
-    computerGrid.style.display = 'grid'; // display computer grid
+    field.style.display = 'block';
+    computerGrid.style.display = 'grid';
     nameDisplay.parentNode.style.display = 'flex';
   }
   infoDisplay.innerHTML = `Hello, ${nameInput.value}! Let's play.`
   nameDisplay.innerHTML = nameInput.value;
 
   // Create computer grid
-  createBoard(computerGrid, computerSquares, width); // create computer squares
+  createBoard(computerGrid, computerSquares, width);
   shipArray.forEach(ship => {
     generate(ship);
   });
@@ -243,7 +241,7 @@ let carrierCount = 0;
 
 function openSquare(classList) {
   const enemySquare = computerGrid.querySelector(`div[data-id='${shotFired}']`); // square.dataset.id
-  const obj = Object.values(classList); // Object.values() returns array of given object's property values
+  const obj = Object.values(classList);
   if (!enemySquare.classList.contains('hit')
     && !enemySquare.classList.contains('miss')
     && currentPlayer === 'user'
@@ -273,7 +271,7 @@ let cpuCarrierCount = 0;
 
 
 function enemyTurn(square) {
-  square = Math.floor(Math.random() * userSquares.length); // which square to attack?
+  square = Math.floor(Math.random() * userSquares.length); // select square to attack
   if (userSquares[square].classList.contains('hit')) { // 
     enemyTurn(); // if already shot at, try again
   } else {
